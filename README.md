@@ -31,5 +31,27 @@ var secure = auth.wrap(bot, [/* array of id */]);
 
 **Return** wrapped bot.
 
+# Secure Functions
+
+### [onText](https://github.com/yagop/node-telegram-bot-api/blob/master/doc/api.md#TelegramBot+onText)
+
+# Secure Events
+Subset of [events](https://github.com/yagop/node-telegram-bot-api/blob/master/doc/usage.md#events)
+
+- `auth@message`
+- `auth@text`
+- `auth@audio`
+- `auth@document`,
+- `auth@photo`
+- `auth@sticker`
+- `auth@video`
+- `auth@voice`
+- `auth@contact`
+- `auth@location`
+- `auth@callback_query`
+- `auth@inline_query`
+- `auth@chosen_inline_result`
+- `auth@edited_message`
+
 # Author
 Francesco Cannizzaro

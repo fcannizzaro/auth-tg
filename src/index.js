@@ -1,5 +1,11 @@
 var clone = require('clone');
 
+var events = [
+  'message', 'text', 'audio', 'document', 'photo', 'sticker',
+  'video', 'voice', 'contact', 'location', 'callback_query',
+  'inline_query', 'chosen_inline_result', 'edited_message'
+];
+
 exports.wrap = (bot, authorized) => {
 
   if (!bot) {
@@ -12,11 +18,15 @@ exports.wrap = (bot, authorized) => {
   });
 
   secure.onText = (regx, cb) =>
-    bot.onText(regx, (msg, match) => {
-      if ((authorized || []).indexOf(msg.chat.id) > -1) {
-        cb.apply(null, [msg, match]);
-      }
-    });
+    bot.onText(regx, (msg, match) =>
+      ((authorized || []).indexOf(msg.chat.id) > -1) && cb.apply(null, [msg, match])
+    );
+
+  events.forEach(event =>
+    bot.on(event, (msg) =>
+      ((authorized || []).indexOf(msg.chat.id) > -1) && secure.emit('auth@' + event, msg)
+    )
+  );
 
   return secure;
 

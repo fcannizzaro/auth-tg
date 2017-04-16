@@ -1,6 +1,6 @@
 {
   "name": "auth-tg",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "Simple Auth Middleware (node-telegram-bot-api)",
   "main": "dist/index.js",
   "scripts": {
