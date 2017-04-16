@@ -13,19 +13,21 @@ exports.wrap = (bot, authorized) => {
     return;
   }
 
+  authorized = authorized || [];
+
   var secure = clone(bot, {
     includeNonEnumerable: true
   });
 
   secure.onText = (regx, cb) =>
     bot.onText(regx, (msg, match) =>
-      ((authorized || []).indexOf(msg.chat.id) > -1) && cb.apply(null, [msg, match])
+      authorized.indexOf(msg.chat.id) > -1 && cb.apply(null, [msg, match])
     );
 
   events.forEach(event =>
     bot.on(event, (msg) => {
       var chat = msg.chat || msg.message.chat;
-      ((authorized || []).indexOf(chat.id) > -1) && secure.emit('auth@' + event, msg);
+      authorized.indexOf(chat.id) > -1 && secure.emit('auth@' + event, msg);
     })
   );
 
