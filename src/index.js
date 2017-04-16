@@ -23,9 +23,10 @@ exports.wrap = (bot, authorized) => {
     );
 
   events.forEach(event =>
-    bot.on(event, (msg) =>
-      ((authorized || []).indexOf(msg.chat.id) > -1) && secure.emit('auth@' + event, msg)
-    )
+    bot.on(event, (msg) => {
+      var chat = msg.chat || msg.message.chat;
+      ((authorized || []).indexOf(chat.id) > -1) && secure.emit('auth@' + event, msg);
+    })
   );
 
   return secure;
