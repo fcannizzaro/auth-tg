@@ -1,4 +1,4 @@
-var extend = require('util')._extend;
+var clone = require('clone');
 
 exports.wrap = (bot, authorized) => {
 
@@ -7,7 +7,9 @@ exports.wrap = (bot, authorized) => {
     return;
   }
 
-  var secure = extend({}, bot);
+  var secure = clone(bot, {
+    includeNonEnumerable: true
+  });
 
   secure.onText = (regx, cb) =>
     bot.onText(regx, (msg, match) => {
